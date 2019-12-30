@@ -1,4 +1,6 @@
 package engine.move;
 
-public class Diagonal {
+public class Diagonal extends Normal
+{
+
 }

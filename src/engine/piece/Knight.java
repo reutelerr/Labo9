@@ -1,4 +1,6 @@
 package engine.piece;
 
-public class Knight {
+public class Knight extends Piece
+{
+
 }

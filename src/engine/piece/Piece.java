@@ -1,11 +1,20 @@
 package engine.piece;
-
-import engine.Coordinates;
+import engine.move.Move;
 
 public abstract class Piece
 {
-    private boolean color;//true = white, false = black
-    private Coordinates pos;
+    public boolean color;//true = white, false = black
+    private Move[] moves;
 
-    public abstract boolean move(Coordinates dest);//returns true if move is valid, false otherwise
+    public boolean move(int[] pos, int[] dest)//returns true if move is valid, false otherwise
+    {
+        for(Move move : moves)
+        {
+            if(move.verifyMove(pos, dest))
+            {
+                return true;
+            }
+        }
+        return false;
+    }
 }
