@@ -2,9 +2,14 @@ package engine.move;
 
 public class Straight extends Normal
 {
+    Straight(int distanceMax, Direction direction)//TODO: Throw exeption if direction diagonal ???
+    {
+        super(distanceMax, direction);
+    }
+
     public boolean isMoveType(int[] origin, int[] dest)
     {
-        return origin[0]==dest[0] || origin[1]==dest[1];
+        return (origin[0]==dest[0] || origin[1]==dest[1]);
     }
 
     public boolean detectCollision(int[] origin, Direction direction, int distance)
@@ -70,7 +75,7 @@ public class Straight extends Normal
                 direction = Direction.DOWN;//bas
             }
         }
-        int distance = Math.abs(dest[1]-origin[1]) + Math.abs(dest[0]-origin[0]);
-        return detectCollision(origin, direction, distance) && checkDestination(dest);
+        Integer distance = Math.abs(dest[1]-origin[1]) + Math.abs(dest[0]-origin[0]);
+        return detectCollision(origin, direction, distance);
     }
 }

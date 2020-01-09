@@ -2,6 +2,11 @@ package engine.move;
 
 public class Diagonal extends Normal
 {
+    Diagonal(int distanceMax, Direction direction)//TODO: Throw exeption if direction straight ???
+    {
+        super(distanceMax, direction);
+    }
+
     public boolean isMoveType(int[] origin, int[] dest)
     {
         return Math.abs(dest[1]-origin[1])==Math.abs(dest[0]-origin[0]);
@@ -65,7 +70,6 @@ public class Diagonal extends Normal
                 direction = Direction.DOWN_LEFT;//bas-gauche
         }
         int distance = Math.abs(dest[1]-origin[1]);
-
-        return detectCollision(origin, direction, distance) && checkDestination(dest);
+        return detectCollision(origin, direction, distance);
     }
 }

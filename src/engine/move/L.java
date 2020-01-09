@@ -9,9 +9,4 @@ public abstract class L extends Move
         return  verticalDistance == 2 && horizontalDistance == 1 ||
                 verticalDistance == 1 && horizontalDistance == 2;
     }
-
-    public boolean verifyMove(int[] origin, int[] dest)
-    {
-        return checkDestination(dest);
-    }
 }
