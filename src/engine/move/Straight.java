@@ -7,33 +7,33 @@ public class Straight extends Normal
         return origin[0]==dest[0] || origin[1]==dest[1];
     }
 
-    public boolean detectCollision(int[] origin, int direction, int distance)
+    public boolean detectCollision(int[] origin, Direction direction, int distance)
     {
         for(int i=1; i<distance; ++i)
         {
             switch(direction)
             {
-                case 1://haut
+                case UP://haut
                     if(b.getSquare(new int[] {origin[0], origin[1]+i})!=null)
                     {
                         return true;
                     }
                     break;
 
-                case 2://droite
+                case RIGHT://droite
                     if(b.getSquare(new int[] {origin[0]+i, origin[1]})!=null)
                     {
                         return true;
                     }
                     break;
 
-                case 3://bas
+                case DOWN://bas
                     if(b.getSquare(new int[] {origin[0], origin[0]-i})!=null)
                     {
                         return true;
                     }
                     break;
-                case 4://gauche
+                case LEFT://gauche
                     if(b.getSquare(new int[] {origin[0]-i, origin[1]})!=null)
                     {
                         return true;
@@ -47,27 +47,27 @@ public class Straight extends Normal
 
     public boolean verifyMove(int[] origin, int[] dest)
     {
-        int direction = 0;
+        Direction direction = Direction.NONE;
         if(dest[1]==origin[1])
         {
             if(dest[0]>origin[0])
             {
-                direction = 2;//droite
+                direction = Direction.RIGHT;//droite
             }
             else
             {
-                direction = 4;//gauche
+                direction = Direction.LEFT;//gauche
             }
         }
         else
         {
             if(dest[1]>origin[1])
             {
-                direction = 1;//haut
+                direction = Direction.UP;//haut
             }
             else
             {
-                direction = 3;//bas
+                direction = Direction.DOWN;//bas
             }
         }
         int distance = Math.abs(dest[1]-origin[1]) + Math.abs(dest[0]-origin[0]);
