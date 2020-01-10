@@ -5,11 +5,17 @@ import engine.move.Straight;
 
 public class Rook extends Piece
 {
+    private boolean hasMoved;
+
     Rook(boolean color)
     {
         super(color);
-        moves = new Move[]{
-                new Straight(-1, Move.Direction.ALL)
-        };
+    }
+
+    private static Straight move = new Straight(-1, Move.Direction.ALL);
+
+    public boolean hasMoved()
+    {
+        return hasMoved;
     }
 }

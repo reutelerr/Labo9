@@ -1,20 +1,28 @@
 package engine.move;
+import engine.piece.Rook;
 
-public class Straight extends Normal
+public class Castle extends Straight
 {
-    public Straight()
-    {
-        super();
-    }
+    private Rook rook;
 
-    public Straight(int distanceMax, Direction direction)//TODO: Throw exeption if direction diagonal ???
+    Castle(Direction direction, Rook rook)
     {
-        super(distanceMax, direction);
+        this.rook = rook;
+        this.directionPossible = direction;
+        if(direction == Direction.LEFT)
+        {
+            distanceMax = 3;
+        }
+        else if(direction == Direction.RIGHT)
+        {
+            distanceMax = 2;
+        }
+        //TODO : Envoyer une exception si direction n'est pas doite ou gauche ???
     }
 
     public boolean isMoveType(int[] origin, int[] dest)
     {
-        return (origin[0]==dest[0] || origin[1]==dest[1]);
+        return (origin[1]==dest[1] && Math.abs(Math.abs(dest[0]-origin[0]))>1);
     }
 
     public boolean detectCollision(int[] origin, Direction direction, int distance)
@@ -50,42 +58,33 @@ public class Straight extends Normal
                     }
                     break;
             }
-
         }
         return false;
     }
 
     public boolean verifyMove(int[] origin, int[] dest)
     {
-        Direction direction = Direction.NONE;
-        if(dest[1]==origin[1])
-        {
-            if(dest[0]>origin[0])
-            {
-                direction = Direction.RIGHT;//droite
-            }
-            else
-            {
-                direction = Direction.LEFT;//gauche
-            }
-        }
-        else
-        {
-            if(dest[1]>origin[1])
-            {
-                direction = Direction.UP;//haut
-            }
-            else
-            {
-                direction = Direction.DOWN;//bas
-            }
-        }
-        int distance = Math.abs(dest[1]-origin[1]) + Math.abs(dest[0]-origin[0]);
-        if(directionPossible!=Direction.ALL && directionPossible!=direction)
+        if(rook.hasMoved())
         {
             return false;
         }
-        if(distance>distanceMax && distanceMax!=-1)
+
+        Direction direction = Direction.NONE;
+        if(dest[0]>origin[0])
+        {
+            direction = Direction.RIGHT;//droite
+        }
+        else
+        {
+            direction = Direction.LEFT;//gauche
+        }
+
+        int distance = Math.abs(Math.abs(dest[0]-origin[0]));
+        if(directionPossible!=direction)
+        {
+            return false;
+        }
+        if(distance!=distanceMax)
         {
             return false;
         }

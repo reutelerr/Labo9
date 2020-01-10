@@ -9,9 +9,8 @@ public class Queen extends Piece
     Queen(boolean color)
     {
         super(color);
-        moves = new Move[]{
-                new Diagonal(-1, Move.Direction.ALL),
-                new Straight(-1, Move.Direction.ALL)
-        };
     }
+
+    private static Diagonal diagonal = new Diagonal(-1, Move.Direction.ALL);
+    private static Straight straight = new Straight(-1, Move.Direction.ALL);
 }

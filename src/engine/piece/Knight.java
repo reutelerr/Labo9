@@ -8,8 +8,7 @@ public class Knight extends Piece
     Knight(boolean color)
     {
         super(color);
-        moves = new Move[]{
-                new L()
-        };
     }
+
+    private static Move move = new L();
 }
