@@ -1,6 +1,6 @@
 package engine.move;
 
-public abstract class L extends Move
+public class L extends Move
 {
     public boolean isMoveType(int[] origin, int[] dest)
     {
@@ -8,5 +8,10 @@ public abstract class L extends Move
         int verticalDistance   = Math.abs(origin[1]-dest[1]);
         return  verticalDistance == 2 && horizontalDistance == 1 ||
                 verticalDistance == 1 && horizontalDistance == 2;
+    }
+
+    public boolean verifyMove(int[] origin, int[] dest)
+    {
+        return true;
     }
 }

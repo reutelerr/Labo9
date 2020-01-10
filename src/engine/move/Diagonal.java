@@ -2,7 +2,7 @@ package engine.move;
 
 public class Diagonal extends Normal
 {
-    Diagonal(int distanceMax, Direction direction)//TODO: Throw exeption if direction straight ???
+    public Diagonal(int distanceMax, Direction direction)//TODO: Throw exeption if direction straight ???
     {
         super(distanceMax, direction);
     }

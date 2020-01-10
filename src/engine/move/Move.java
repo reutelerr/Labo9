@@ -6,9 +6,12 @@ public abstract class Move
         UP, RIGHT, DOWN, LEFT,
         UP_RIGHT, DOWN_RIGHT, DOWN_LEFT, UP_LEFT,
         ALL, NONE
+        //All veut dire soit toutes les directions droites, soit toutes les diagonales, selon l'instance qui utilise l'enum
     }
     protected engine.Board b;
     protected engine.Game g;
+
+    public abstract boolean verifyMove(int[] origin, int[] dest);//true if move correct (no collisions)
 
     public abstract boolean isMoveType(int[] origin, int[] dest);//true if move is of the instance move type
 
