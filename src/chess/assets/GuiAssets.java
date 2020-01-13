@@ -1,5 +1,7 @@
-package chess;
+package chess.assets;
 
+import chess.PieceType;
+import chess.PlayerColor;
 import chess.views.gui.GUIView;
 
 import javax.imageio.ImageIO;

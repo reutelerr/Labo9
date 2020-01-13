@@ -1,8 +1,14 @@
 package engine;
 import engine.piece.Piece;
 
-public class Game
+public class Game implements chess.ChessController
 {
+    private chess.ChessView view;
+
+    public Game()
+    {
+        activePlayer = true;//White starts
+    }
     private boolean activePlayer;
 
     private Piece[][] grid;
@@ -30,13 +36,23 @@ public class Game
         return false;
     }
 
-    public void move(int posX, int posY, int destX, int destY)
+    public boolean move(int posX, int posY, int destX, int destY)
     {
         if(grid[posX][posY]!=null && grid[posX][posY].move(new int[] {posX, posY}, new int[] {destX, destY}))
         {
-            grid[destX][destY]=grid[posX][posY];
-            grid[posX][posY]=null;
+            forceMove(posX, posY, destX, destY);
+            return true;
         }
+        return false;
+    }
+
+    public void forceMove(int posX, int posY, int destX, int destY)
+    {
+        Piece piece = grid[posX][posY];
+        grid[destX][destY]=piece;
+        view.putPiece(piece.getType(), piece.getColorEnum(), destX, destY);
+        grid[posX][posY]=null;
+        view.removePiece(posX, posY);
     }
 
     public boolean getActivePlayer()

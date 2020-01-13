@@ -1,4 +1,4 @@
-package chess.assets.views;
+package chess.views;
 
 public interface DrawableResource<Resource> {
   Resource getResource();

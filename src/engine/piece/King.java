@@ -1,4 +1,5 @@
 package engine.piece;
+import chess.PieceType;
 import engine.move.Diagonal;
 import engine.move.Straight;
 import engine.move.Castle;
@@ -6,7 +7,7 @@ import engine.move.Move;
 
 public class King extends Piece {
 
-    private engine.Board b;
+    private engine.Game g;
     private boolean hasMoved;
     private int[] coord;
 
@@ -21,7 +22,7 @@ public class King extends Piece {
         {
             coord = new int[] {0, 4};
         }
-        this.b = b;
+        this.g = g;
         hasMoved = false;
     }
 
@@ -34,7 +35,7 @@ public class King extends Piece {
 
     public boolean check()
     {
-        return b.check(coord);
+        return g.check(coord);
     }
 
     public boolean move(int[] pos, int[] dest)
@@ -49,27 +50,27 @@ public class King extends Piece {
                     {
                         {//rightCastle
                             int[] rook_coord = new int[] {dest[0]+1, dest[1]};
-                            Piece piece = b.getSquare(rook_coord);//The corresponding rook
+                            Piece piece = g.getSquare(rook_coord);//The corresponding rook
                             if(piece.getClass()==Rook.class &&
                                     piece.color == color &&
                                     !piece.hasMoved() &&
                                     this.hasMoved &&
                                     rightCastle.verifyMove(pos, dest))
                             {//TODO : Normally, if the king can do the castle, so can the rook... use exception just in case ?
-                                b.move(rook_coord[0], rook_coord[1],dest[0]-1, dest[1]);
+                                g.forceMove(rook_coord[0], rook_coord[1],dest[0]-1, dest[1]);
                                 return true;
                             }
                         }
                         {//leftCastle
                             int[] rook_coord = new int[] {dest[0]-2, dest[1]};
-                            Piece piece = b.getSquare(rook_coord);//The corresponding rook
+                            Piece piece = g.getSquare(rook_coord);//The corresponding rook
                             if(piece.getClass()==Rook.class &&
                                     piece.color == color &&
                                     !piece.hasMoved() &&
                                     this.hasMoved &&
-                                    rightCastle.verifyMove(pos, dest))
+                                    leftCastle.verifyMove(pos, dest))
                             {//TODO : Normally, if the king can do the castle, so can the rook... use exception just in case ?
-                                b.move(rook_coord[0], rook_coord[1], dest[0]+1, dest[1]);
+                                g.forceMove(rook_coord[0], rook_coord[1], dest[0]+1, dest[1]);
                                 return true;
                             }
                         }
@@ -90,5 +91,11 @@ public class King extends Piece {
     {
         coord = pos;
         hasMoved = true;
+    }
+
+    @Override
+    public PieceType getType()
+    {
+        return PieceType.KING;
     }
 }

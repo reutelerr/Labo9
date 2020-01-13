@@ -1,5 +1,5 @@
 package engine.piece;
-
+import chess.PieceType;
 import engine.move.Move;
 import engine.move.Straight;
 import engine.move.Diagonal;
@@ -50,5 +50,10 @@ public class Pawn extends Piece
     public void moveDone()
     {
         hasMoved = true;
+    }
+
+    @Override
+    public PieceType getType() {
+        return PieceType.PAWN;
     }
 }

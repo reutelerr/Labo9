@@ -2,7 +2,7 @@ package engine.move;
 
 public abstract class Normal extends Move
 {
-    int distanceMax = -1;
+    int distanceMax;
     Direction directionPossible;
 
     Normal()
@@ -17,5 +17,5 @@ public abstract class Normal extends Move
         this.directionPossible = directionPossible;
     }
 
-    public abstract boolean detectCollision(int origin[], Direction direction, int distance);//true means there is a collision
+    public abstract boolean detectCollision(int[] origin, Direction direction, int distance);//true means there is a collision
 }

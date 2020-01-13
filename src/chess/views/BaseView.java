@@ -1,4 +1,4 @@
-package chess.assets.views;
+package chess.views;
 
 import chess.ChessController;
 import chess.ChessView;

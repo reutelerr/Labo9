@@ -1,5 +1,5 @@
 package engine.piece;
-
+import chess.PieceType;
 import engine.move.Diagonal;
 import engine.move.Move;
 import engine.move.Straight;
@@ -25,5 +25,10 @@ public class Queen extends Piece
             return straight.verifyMove(pos, dest);
         }
         return false;
+    }
+
+    @Override
+    public PieceType getType() {
+        return PieceType.BISHOP;
     }
 }

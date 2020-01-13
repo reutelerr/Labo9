@@ -1,5 +1,5 @@
 package engine.piece;
-
+import chess.PieceType;
 import engine.move.Move;
 import engine.move.Straight;
 
@@ -25,5 +25,10 @@ public class Rook extends Piece
     public boolean hasMoved()
     {
         return true;
+    }
+
+    @Override
+    public PieceType getType() {
+        return PieceType.ROOK;
     }
 }

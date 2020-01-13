@@ -19,28 +19,28 @@ public class Diagonal extends Normal
             switch(direction)
             {
                 case UP_RIGHT://haut-droite
-                    if(b.getSquare(new int[] {origin[0]+i, origin[1]+i})!=null)
+                    if(g.getSquare(new int[] {origin[0]+i, origin[1]+i})!=null)
                     {
                         return true;
                     }
                     break;
 
                 case DOWN_RIGHT://bas-droite
-                    if(b.getSquare(new int[] {origin[0]+i, origin[1]-i})!=null)
+                    if(g.getSquare(new int[] {origin[0]+i, origin[1]-i})!=null)
                     {
                         return true;
                     }
                     break;
 
                 case DOWN_LEFT://bas-gauche
-                    if(b.getSquare(new int[] {origin[0]-i, origin[1]-i})!=null)
+                    if(g.getSquare(new int[] {origin[0]-i, origin[1]-i})!=null)
                     {
                         return true;
                     }
                     break;
 
                 case UP_LEFT://haut-gauche
-                    if(b.getSquare(new int[] {origin[0]-i, origin[0]+i})!=null)
+                    if(g.getSquare(new int[] {origin[0]-i, origin[0]+i})!=null)
                     {
                         return true;
                     }
