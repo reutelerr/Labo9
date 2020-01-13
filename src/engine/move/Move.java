@@ -13,10 +13,20 @@ public abstract class Move
 
     public abstract boolean verifyMove(int[] origin, int[] dest);//true if move correct (no collisions)
 
-    public abstract boolean isMoveType(int[] origin, int[] dest);//true if move is of the instance move type
+    //public  boolean isMoveType(int[] origin, int[] dest);//true if move is of the instance move type
+
+    static public boolean checkDestinationFree(int[] dest)
+    {
+        return b.getSquare(dest)==null;
+    }
+
+    static public boolean checkDestinationTaken(int[] dest)
+    {
+        return b.getSquare(dest).color == !g.getActivePlayer();
+    }
 
     static public boolean checkDestination(int[] dest)//true si destination ok
     {
-        return !(b.getSquare(dest).color == g.getActivePlayer());//Vérifier ce qui se passe si la case est vide...
+        return checkDestinationFree(dest) || checkDestinationTaken(dest);
     }
 }

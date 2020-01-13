@@ -3,24 +3,14 @@ import engine.piece.Rook;
 
 public class Castle extends Straight
 {
-    private Rook rook;
-
-    Castle(Direction direction, Rook rook)
+    public Castle(Direction direction)
     {
-        this.rook = rook;
         this.directionPossible = direction;
-        if(direction == Direction.LEFT)
-        {
-            distanceMax = 3;
-        }
-        else if(direction == Direction.RIGHT)
-        {
-            distanceMax = 2;
-        }
+        distanceMax = 2;
         //TODO : Envoyer une exception si direction n'est pas doite ou gauche ???
     }
 
-    public boolean isMoveType(int[] origin, int[] dest)
+    public static boolean isMoveType(int[] origin, int[] dest)
     {
         return (origin[1]==dest[1] && Math.abs(Math.abs(dest[0]-origin[0]))>1);
     }
@@ -32,7 +22,7 @@ public class Castle extends Straight
             switch(direction)
             {
                 case UP://haut
-                    if(b.getSquare(new int[] {origin[0], origin[1]+i})!=null)
+                    if(b.getSquare(new int[] {origin[0], origin[1]+i})!=null)//TODO : Verify Check
                     {
                         return true;
                     }
@@ -64,11 +54,6 @@ public class Castle extends Straight
 
     public boolean verifyMove(int[] origin, int[] dest)
     {
-        if(rook.hasMoved())
-        {
-            return false;
-        }
-
         Direction direction = Direction.NONE;
         if(dest[0]>origin[0])
         {

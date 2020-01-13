@@ -14,7 +14,8 @@ public class Bishop extends Piece
     public boolean move(int[] pos, int[] dest)
     {
         return Move.checkDestination(dest) &&
-                verifyMove(move, pos, dest);
-        
+                Diagonal.isMoveType(pos, dest) &&
+                move.verifyMove(pos, dest);
+        //First, we check if the destination is correct, then if the attempted move is Diagonal, finally if the move if correct
     }
 }

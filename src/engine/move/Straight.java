@@ -12,7 +12,7 @@ public class Straight extends Normal
         super(distanceMax, direction);
     }
 
-    public boolean isMoveType(int[] origin, int[] dest)
+    public static boolean isMoveType(int[] origin, int[] dest)
     {
         return (origin[0]==dest[0] || origin[1]==dest[1]);
     }

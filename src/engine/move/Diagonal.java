@@ -7,7 +7,7 @@ public class Diagonal extends Normal
         super(distanceMax, direction);
     }
 
-    public boolean isMoveType(int[] origin, int[] dest)
+    public static boolean isMoveType(int[] origin, int[] dest)
     {
         return Math.abs(dest[1]-origin[1])==Math.abs(dest[0]-origin[0]);
     }

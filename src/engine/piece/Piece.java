@@ -1,5 +1,6 @@
 package engine.piece;
 import engine.move.Move;
+import engine.Board;
 
 public abstract class Piece
 {
@@ -10,10 +11,11 @@ public abstract class Piece
         this.color = color;
     }
 
-    public boolean verifyMove(Move move, int[] pos, int[] dest)//returns true if move is valid, false otherwise
+    public abstract boolean move(int[] pos, int[] dest);
+    public boolean hasMoved()
     {
-        return move.isMoveType(pos, dest) && move.verifyMove(pos, dest);
+        return false;
     }
 
-    public abstract boolean move(int[] pos, int[] dest);
+    public void moveDone(){}//It's redefined by Kings, Rooks and Pawns
 }
