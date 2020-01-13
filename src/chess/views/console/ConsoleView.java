@@ -1,11 +1,11 @@
-package views.console;
+package chess.assets.views.console;
 
 import chess.ChessController;
+import chess.ConsoleAssets;
 import chess.PieceType;
 import chess.PlayerColor;
-import chess.assets.ConsoleAssets;
-import chess.views.BaseView;
-import chess.views.DrawableResource;
+import chess.assets.views.BaseView;
+import chess.assets.views.DrawableResource;
 
 import java.util.Scanner;
 import java.util.regex.Pattern;

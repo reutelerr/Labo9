@@ -1,11 +1,11 @@
-package views.gui;
+package chess.assets.views.gui;
 
 import chess.ChessController;
+import chess.GuiAssets;
 import chess.PieceType;
 import chess.PlayerColor;
-import chess.assets.GuiAssets;
-import chess.views.BaseView;
-import chess.views.DrawableResource;
+import chess.assets.views.BaseView;
+import chess.assets.views.DrawableResource;
 
 import javax.swing.*;
 import javax.swing.border.CompoundBorder;

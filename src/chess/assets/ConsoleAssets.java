@@ -1,7 +1,5 @@
-package assets;
+package chess;
 
-import chess.PieceType;
-import chess.PlayerColor;
 import chess.views.console.ConsoleView;
 
 public class ConsoleAssets {
