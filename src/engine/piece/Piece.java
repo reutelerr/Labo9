@@ -5,9 +5,17 @@ public abstract class Piece
 {
     protected boolean color;//true = white, false = black
 
-    Piece(boolean color)
+    public Piece(PlayerColor color)
     {
-        this.color = color;
+        if(color == PlayerColor.WHITE)
+        {
+            this.color = true;
+        }
+        else
+        {
+            this.color = false;
+        }
+
     }
 
     public abstract boolean move(int[] pos, int[] dest);

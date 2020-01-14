@@ -8,7 +8,13 @@ public abstract class Move
         ALL, NONE
         //All veut dire soit toutes les directions droites, soit toutes les diagonales, selon l'instance qui utilise l'enum
     }
+
     static protected engine.Game g;
+
+    public static void init(engine.Game newG)
+    {
+         g = newG;
+    }
 
     public abstract boolean verifyMove(int[] origin, int[] dest);//true if move correct (no collisions)
 

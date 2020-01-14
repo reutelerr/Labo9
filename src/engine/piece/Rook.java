@@ -1,5 +1,6 @@
 package engine.piece;
 import chess.PieceType;
+import chess.PlayerColor;
 import engine.move.Move;
 import engine.move.Straight;
 
@@ -7,7 +8,7 @@ public class Rook extends Piece
 {
     private boolean hasMoved;
 
-    Rook(boolean color)
+    public Rook(PlayerColor color)
     {
         super(color);
     }

@@ -1,12 +1,13 @@
 package engine.piece;
 import chess.PieceType;
+import chess.PlayerColor;
 import engine.move.Diagonal;
 import engine.move.Move;
 import engine.move.Straight;
 
 public class Queen extends Piece
 {
-    Queen(boolean color)
+    public Queen(PlayerColor color)
     {
         super(color);
     }
@@ -29,6 +30,6 @@ public class Queen extends Piece
 
     @Override
     public PieceType getType() {
-        return PieceType.BISHOP;
+        return PieceType.QUEEN;
     }
 }

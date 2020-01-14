@@ -1,5 +1,6 @@
 package engine.piece;
 import chess.PieceType;
+import chess.PlayerColor;
 import engine.move.Move;
 import engine.move.Straight;
 import engine.move.Diagonal;
@@ -8,7 +9,7 @@ public class Pawn extends Piece
 {
     private boolean hasMoved;//Used to indicate if the pawn can go forward 2 squares
 
-    Pawn(boolean color)
+    public Pawn(PlayerColor color)
     {
         super(color);
         Move forward1;
@@ -25,16 +26,16 @@ public class Pawn extends Piece
 
     public boolean move(int[] pos, int[] dest)
     {
+        if(Straight.isMoveType(pos, dest) && Move.checkDestinationFree(dest))
+        {
+            if(!hasMoved && forward2.verifyMove(pos, dest))
+            {
+                return true;
+            }
+            return forward1.verifyMove(pos, dest);
+        }
         if(Move.checkDestination(dest))
         {
-            if(Straight.isMoveType(pos, dest) && Move.checkDestinationFree(dest))
-            {
-                if(!hasMoved && forward2.verifyMove(pos, dest))
-                {
-                    return true;
-                }
-                return forward1.verifyMove(pos, dest);
-            }
             if(Diagonal.isMoveType(pos, dest) && Move.checkDestinationTaken(dest))
             {
                 if(attackRight.verifyMove(pos, dest))

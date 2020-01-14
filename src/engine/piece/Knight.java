@@ -1,11 +1,12 @@
 package engine.piece;
 import chess.PieceType;
+import chess.PlayerColor;
 import engine.move.Move;
 import engine.move.L;
 
 public class Knight extends Piece
 {
-    Knight(boolean color)
+    public Knight(PlayerColor color)
     {
         super(color);
     }

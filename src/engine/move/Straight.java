@@ -89,6 +89,6 @@ public class Straight extends Normal
         {
             return false;
         }
-        return detectCollision(origin, direction, distance);
+        return !detectCollision(origin, direction, distance);
     }
 }

@@ -1,4 +1,5 @@
 package engine.move;
+import engine.Game;
 
 public abstract class Normal extends Move
 {

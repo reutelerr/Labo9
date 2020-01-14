@@ -1,5 +1,6 @@
 package engine.piece;
 import chess.PieceType;
+import chess.PlayerColor;
 import engine.move.Diagonal;
 import engine.move.Straight;
 import engine.move.Castle;
@@ -11,10 +12,10 @@ public class King extends Piece {
     private boolean hasMoved;
     private int[] coord;
 
-    King(boolean color, engine.Board b)
+    public King(PlayerColor color, engine.Game g)
     {
         super(color);
-        if(color)
+        if(this.color)
         {
             coord = new int[] {0, 4};
         }
