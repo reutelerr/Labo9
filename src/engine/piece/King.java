@@ -8,11 +8,11 @@ import engine.move.Move;
 
 public class King extends Piece {
 
-    private engine.Game g;
+    private engine.Board b;
     private boolean hasMoved;
     private int[] coord;
 
-    public King(PlayerColor color, engine.Game g)
+    public King(PlayerColor color, engine.Board b)
     {
         super(color);
         if(this.color)
@@ -23,7 +23,7 @@ public class King extends Piece {
         {
             coord = new int[] {0, 4};
         }
-        this.g = g;
+        this.b = b;
         hasMoved = false;
     }
 
@@ -34,14 +34,14 @@ public class King extends Piece {
     private static Castle rightCastle = new Castle(Move.Direction.RIGHT);
     private static Castle leftCastle = new Castle(Move.Direction.LEFT);
 
-    public boolean check()
+    public boolean check(engine.Board board)
     {
-        return g.check(coord);
+        return board.check(coord);
     }
 
-    public boolean move(int[] pos, int[] dest)
+    public boolean move(int[] pos, int[] dest, engine.Board b)
     {
-        if(Move.checkDestination(dest))
+        if(Move.checkDestination(dest, b))
         {
             if(Straight.isMoveType(pos, dest))
             {
@@ -51,38 +51,43 @@ public class King extends Piece {
                     {
                         {//rightCastle
                             int[] rook_coord = new int[] {dest[0]+1, dest[1]};
-                            Piece piece = g.getSquare(rook_coord);//The corresponding rook
+                            Piece piece = b.getSquare(rook_coord);//The corresponding rook
                             if(piece.getClass()==Rook.class &&
                                     piece.color == color &&
                                     !piece.hasMoved() &&
-                                    this.hasMoved &&
-                                    rightCastle.verifyMove(pos, dest))
-                            {//TODO : Normally, if the king can do the castle, so can the rook... use exception just in case ?
-                                g.forceMove(rook_coord[0], rook_coord[1],dest[0]-1, dest[1]);
-                                return true;
+                                    this.hasMoved)
+                            {
+                                if(super.verifyMove(pos, dest, b, rightCastle))
+                                {
+                                    b.doMove(rook_coord[0], rook_coord[1],dest[0]-1, dest[1]);
+                                    return true;
+                                }
+
                             }
                         }
                         {//leftCastle
                             int[] rook_coord = new int[] {dest[0]-2, dest[1]};
-                            Piece piece = g.getSquare(rook_coord);//The corresponding rook
+                            Piece piece = b.getSquare(rook_coord);//The corresponding rook
                             if(piece.getClass()==Rook.class &&
                                     piece.color == color &&
                                     !piece.hasMoved() &&
-                                    this.hasMoved &&
-                                    leftCastle.verifyMove(pos, dest))
-                            {//TODO : Normally, if the king can do the castle, so can the rook... use exception just in case ?
-                                g.forceMove(rook_coord[0], rook_coord[1], dest[0]+1, dest[1]);
-                                return true;
+                                    this.hasMoved)
+                            {
+                                if(super.verifyMove(pos, dest, b, leftCastle))
+                                {
+                                    b.doMove(rook_coord[0], rook_coord[1], dest[0]+1, dest[1]);
+                                    return true;
+                                }
                             }
                         }
                     }
 
                 }
-                return straight.verifyMove(pos, dest);
+                return super.verifyMove(pos, dest, b, straight);
             }
             if(Diagonal.isMoveType(pos, dest))
             {
-                return diagonal.verifyMove(pos, dest);
+                return super.verifyMove(pos, dest, b, diagonal);
             }
         }
         return false;

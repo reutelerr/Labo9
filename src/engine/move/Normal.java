@@ -18,5 +18,5 @@ public abstract class Normal extends Move
         this.directionPossible = directionPossible;
     }
 
-    public abstract boolean detectCollision(int[] origin, Direction direction, int distance);//true means there is a collision
+    protected abstract boolean detectCollision(int[] origin, Direction direction, int distance);//true means there is a collision
 }

@@ -13,16 +13,19 @@ public class Knight extends Piece
 
     private static Move move = new L();
 
-    public boolean move(int[] pos, int[] dest)
+    public boolean move(int[] pos, int[] dest, engine.Board b)
     {
-        return move.checkDestination(dest) &&
-                L.isMoveType(pos, dest) &&
-                move.verifyMove(pos, dest);
+        if(L.isMoveType(pos, dest) && move.verifyMove(pos, dest, b))
+        {
+            return super.verifyMove(pos, dest, b, move);
+        }
+        return false;
         //First, we check if the destination is correct, then if the attempted move is Diagonal, finally if the move if correct
     }
 
     @Override
-    public PieceType getType() {
+    public PieceType getType()
+    {
         return PieceType.KNIGHT;
     }
 }

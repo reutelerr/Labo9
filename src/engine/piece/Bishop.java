@@ -13,16 +13,18 @@ public class Bishop extends Piece
 
     static private Diagonal move = new Diagonal(-1, Move.Direction.ALL);
 
-    public boolean move(int[] pos, int[] dest)
+    public boolean move(int[] pos, int[] dest, engine.Board b)
     {
-        return Move.checkDestination(dest) &&
-                Diagonal.isMoveType(pos, dest) &&
-                move.verifyMove(pos, dest);
-        //First, we check if the destination is correct, then if the attempted move is Diagonal, finally if the move if correct
+        if(Diagonal.isMoveType(pos, dest))
+        {
+            return super.verifyMove(pos, dest, b, move);
+        }
+        return false;
     }
 
     @Override
-    public PieceType getType() {
+    public PieceType getType()
+    {
         return PieceType.BISHOP;
     }
 }

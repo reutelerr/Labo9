@@ -15,15 +15,15 @@ public class Queen extends Piece
     private static Diagonal diagonal = new Diagonal(-1, Move.Direction.ALL);
     private static Straight straight = new Straight(-1, Move.Direction.ALL);
 
-    public boolean move(int[] pos, int[] dest)
+    public boolean move(int[] pos, int[] dest, engine.Board b)
     {
         if(Diagonal.isMoveType(pos, dest))
         {
-            return diagonal.verifyMove(pos, dest);
+            return super.verifyMove(pos, dest, b, diagonal);
         }
         if(Straight.isMoveType(pos, dest))
         {
-            return straight.verifyMove(pos, dest);
+            return super.verifyMove(pos, dest, b, straight);
         }
         return false;
     }

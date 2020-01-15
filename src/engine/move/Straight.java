@@ -17,46 +17,43 @@ public class Straight extends Normal
         return (origin[0]==dest[0] || origin[1]==dest[1]);
     }
 
-    public boolean detectCollision(int[] origin, Direction direction, int distance)
+    protected boolean detectCollision(int[] origin, Direction direction, int distance)
     {
         for(int i=1; i<distance; ++i)
         {
+            int[] coord = null;
             switch(direction)
             {
                 case UP://haut
-                    if(g.getSquare(new int[] {origin[0], origin[1]+i})!=null)
-                    {
-                        return true;
-                    }
+                    coord = new int[] {origin[0], origin[1]+i};
                     break;
 
                 case RIGHT://droite
-                    if(g.getSquare(new int[] {origin[0]+i, origin[1]})!=null)
-                    {
-                        return true;
-                    }
+                    coord = new int[] {origin[0]+i, origin[1]};
                     break;
 
                 case DOWN://bas
-                    if(g.getSquare(new int[] {origin[0], origin[0]-i})!=null)
-                    {
-                        return true;
-                    }
+                    coord = new int[] {origin[0], origin[0]-i};
                     break;
-                case LEFT://gauche
-                    if(g.getSquare(new int[] {origin[0]-i, origin[1]})!=null)
-                    {
-                        return true;
-                    }
-                    break;
-            }
 
+                case LEFT://gauche
+                    coord = new int[] {origin[0]-i, origin[1]};
+                    break;
+
+                default://La direction est incorrecte
+                    //TODO : Throw exception ?
+            }
+            if(b.getSquare(coord)!= null)
+            {
+                return true;
+            }
         }
         return false;
     }
 
-    public boolean verifyMove(int[] origin, int[] dest)
+    public boolean verifyMove(int[] origin, int[] dest, engine.Board b)
     {
+        this.b = b;
         Direction direction = Direction.NONE;
         if(dest[1]==origin[1])
         {

@@ -10,7 +10,7 @@ public class L extends Move
                 verticalDistance == 1 && horizontalDistance == 2;
     }
 
-    public boolean verifyMove(int[] origin, int[] dest)
+    public boolean verifyMove(int[] origin, int[] dest, engine.Board b)
     {
         return true;
     }

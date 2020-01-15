@@ -12,7 +12,6 @@ public class Pawn extends Piece
     public Pawn(PlayerColor color)
     {
         super(color);
-        Move forward1;
         hasMoved = false;
     }
 
@@ -24,25 +23,27 @@ public class Pawn extends Piece
     private static Diagonal attackRight = new Diagonal(1, Move.Direction.UP_RIGHT);
     private static Diagonal attackLeft = new Diagonal(1, Move.Direction.UP_LEFT);
 
-    public boolean move(int[] pos, int[] dest)
+    public boolean move(int[] pos, int[] dest, engine.Board b)
     {
-        if(Straight.isMoveType(pos, dest) && Move.checkDestinationFree(dest))
+        if(Straight.isMoveType(pos, dest) && Move.checkDestinationFree(dest, b))
         {
-            if(!hasMoved && forward2.verifyMove(pos, dest))
+            if(!hasMoved)
             {
-                return true;
-            }
-            return forward1.verifyMove(pos, dest);
-        }
-        if(Move.checkDestination(dest))
-        {
-            if(Diagonal.isMoveType(pos, dest) && Move.checkDestinationTaken(dest))
-            {
-                if(attackRight.verifyMove(pos, dest))
+                if(super.verifyMove(pos, dest, b, forward2))
                 {
+                    b.setPassedPawn(this);
                     return true;
                 }
-                return attackLeft.verifyMove(pos, dest);
+            }
+            return super.verifyMove(pos, dest, b, forward1);
+        }
+        if(Move.checkDestination(dest, b))
+        {
+            if(Diagonal.isMoveType(pos, dest) && Move.checkDestinationTaken(dest, b) ||
+                    Move.checkDestinationFree(dest, b) &&
+                            b.getSquare(new int[] {dest[0], dest[1]-1}) == b.getPassedPawn())
+            {
+                return super.verifyMove(pos, dest, b, attackRight) || super.verifyMove(pos, dest, b, attackLeft);
             }
         }
         return false;
@@ -54,7 +55,8 @@ public class Pawn extends Piece
     }
 
     @Override
-    public PieceType getType() {
+    public PieceType getType()
+    {
         return PieceType.PAWN;
     }
 }

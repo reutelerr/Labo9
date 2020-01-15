@@ -2,11 +2,12 @@ package engine.move;
 
 public class Castle extends Straight
 {
+
     public Castle(Direction direction)
     {
         this.directionPossible = direction;
         distanceMax = 2;
-        //TODO : Envoyer une exception si direction n'est pas doite ou gauche ???
+        //TODO : Envoyer une exception si direction n'est pas droite ou gauche ???
     }
 
     public static boolean isMoveType(int[] origin, int[] dest)
@@ -14,45 +15,35 @@ public class Castle extends Straight
         return (origin[1]==dest[1] && Math.abs(Math.abs(dest[0]-origin[0]))>1);
     }
 
-    public boolean detectCollision(int[] origin, Direction direction, int distance)
+    protected boolean detectCollision(int[] origin, Direction direction, int distance)
     {
         for(int i=1; i<distance; ++i)
         {
+            int[] coord = null;
             switch(direction)
             {
-                case UP://haut
-                    if(g.getSquare(new int[] {origin[0], origin[1]+i})!=null)//TODO : Verify Check
-                    {
-                        return true;
-                    }
-                    break;
-
                 case RIGHT://droite
-                    if(g.getSquare(new int[] {origin[0]+i, origin[1]})!=null)
-                    {
-                        return true;
-                    }
+                    coord = new int[] {origin[0]+i, origin[1]};
                     break;
 
-                case DOWN://bas
-                    if(g.getSquare(new int[] {origin[0], origin[0]-i})!=null)
-                    {
-                        return true;
-                    }
-                    break;
                 case LEFT://gauche
-                    if(g.getSquare(new int[] {origin[0]-i, origin[1]})!=null)
-                    {
-                        return true;
-                    }
+                    coord = new int[] {origin[0]-i, origin[1]};
                     break;
+
+                default://La direction est incorrecte
+                    //TODO : Throw exception ?
+            }
+            if(b.getSquare(coord)!= null || b.check(coord))
+            {
+                return true;
             }
         }
         return false;
     }
 
-    public boolean verifyMove(int[] origin, int[] dest)
+    public boolean verifyMove(int[] origin, int[] dest, engine.Board b)
     {
+        this.b = b;
         Direction direction = Direction.NONE;
         if(dest[0]>origin[0])
         {
@@ -72,6 +63,6 @@ public class Castle extends Straight
         {
             return false;
         }
-        return detectCollision(origin, direction, distance);
+        return detectCollision(origin, direction, distance) && !b.check(dest);
     }
 }

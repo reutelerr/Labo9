@@ -16,43 +16,36 @@ public class Diagonal extends Normal
     {
         for(int i=1; i<distance; ++i)
         {
+            int[] coord = null;
             switch(direction)
             {
                 case UP_RIGHT://haut-droite
-                    if(g.getSquare(new int[] {origin[0]+i, origin[1]+i})!=null)
-                    {
-                        return true;
-                    }
+                    coord = new int[] {origin[0]+i, origin[1]+i};
                     break;
 
                 case DOWN_RIGHT://bas-droite
-                    if(g.getSquare(new int[] {origin[0]+i, origin[1]-i})!=null)
-                    {
-                        return true;
-                    }
+                    coord = new int[] {origin[0]+i, origin[1]-i};
                     break;
 
                 case DOWN_LEFT://bas-gauche
-                    if(g.getSquare(new int[] {origin[0]-i, origin[1]-i})!=null)
-                    {
-                        return true;
-                    }
+                    coord = new int[] {origin[0]-i, origin[1]-i};
                     break;
 
                 case UP_LEFT://haut-gauche
-                    if(g.getSquare(new int[] {origin[0]-i, origin[0]+i})!=null)
-                    {
-                        return true;
-                    }
+                    coord = new int[] {origin[0]-i, origin[0]+i};
                     break;
             }
-
+            if(b.getSquare(coord)!= null)
+            {
+                return true;
+            }
         }
         return false;
     }
 
-    public boolean verifyMove(int[] origin, int[] dest)
+    public boolean verifyMove(int[] origin, int[] dest, engine.Board b)
     {
+        this.b = b;
         Direction direction = Direction.NONE;
 
         if(dest[0]>origin[0])

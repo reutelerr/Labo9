@@ -9,29 +9,30 @@ public abstract class Move
         //All veut dire soit toutes les directions droites, soit toutes les diagonales, selon l'instance qui utilise l'enum
     }
 
-    static protected engine.Game g;
+    static engine.Game g;
+    engine.Board b;
 
-    public static void init(engine.Game newG)
+    public static void init(engine.Game newGame)
     {
-         g = newG;
+         g = newGame;
     }
 
-    public abstract boolean verifyMove(int[] origin, int[] dest);//true if move correct (no collisions)
+    public abstract boolean verifyMove(int[] origin, int[] dest, engine.Board b);//true if move correct (no collisions)
 
     //public  boolean isMoveType(int[] origin, int[] dest);//true if move is of the instance move type
 
-    static public boolean checkDestinationFree(int[] dest)
+    static public boolean checkDestinationFree(int[] dest, engine.Board b)
     {
-        return g.getSquare(dest)==null;
+        return b.getSquare(dest)==null;
     }
 
-    static public boolean checkDestinationTaken(int[] dest)
+    static public boolean checkDestinationTaken(int[] dest, engine.Board b)
     {
-        return g.getSquare(dest).getColor() == !g.getActivePlayer();
+        return b.getSquare(dest).getColor() == !g.getActivePlayer();
     }
 
-    static public boolean checkDestination(int[] dest)//true si destination ok
+    static public boolean checkDestination(int[] dest, engine.Board b)//true si destination ok
     {
-        return checkDestinationFree(dest) || checkDestinationTaken(dest);
+        return checkDestinationFree(dest, b) || checkDestinationTaken(dest, b);
     }
 }

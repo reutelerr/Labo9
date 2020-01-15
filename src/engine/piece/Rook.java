@@ -15,12 +15,15 @@ public class Rook extends Piece
 
     private static Straight move = new Straight(-1, Move.Direction.ALL);
 
-    public boolean move(int[] pos, int[] dest)
+    public boolean move(int[] pos, int[] dest, engine.Board b)
     {
-        return Move.checkDestination(dest) &&
-                Straight.isMoveType(pos, dest) &&
-                move.verifyMove(pos, dest);
-        //First, we check if the destination is correct, then if the attempted move is Straight, finally if the move if correct
+        //First, we check if the destination is correct, then if the attempted move is Straight, finally
+        //if the move if correct
+        if(Straight.isMoveType(pos, dest))
+        {
+            return super.verifyMove(pos, dest, b, move);
+        }
+        return false;
     }
 
     public boolean hasMoved()
@@ -29,7 +32,8 @@ public class Rook extends Piece
     }
 
     @Override
-    public PieceType getType() {
+    public PieceType getType()
+    {
         return PieceType.ROOK;
     }
 }

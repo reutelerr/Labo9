@@ -18,7 +18,18 @@ public abstract class Piece
 
     }
 
-    public abstract boolean move(int[] pos, int[] dest);
+    public abstract boolean move(int[] pos, int[] dest, engine.Board b);
+
+    public boolean verifyMove(int[]pos, int[] dest, engine.Board b, engine.move.Move m)
+    {
+        if(m.verifyMove(pos, dest, b))
+        {
+            b.doMove(pos[0], pos[1], dest[0], dest[1]);
+            return true;
+        }
+        return false;
+    }
+
     public boolean hasMoved()
     {
         return false;
