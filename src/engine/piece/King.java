@@ -17,11 +17,11 @@ public class King extends Piece {
         super(color);
         if(this.color)
         {
-            coord = new int[] {0, 4};
+            coord = new int[] {4, 0};
         }
         else
         {
-            coord = new int[] {0, 4};
+            coord = new int[] {4, 7};
         }
         this.b = b;
         hasMoved = false;
@@ -34,30 +34,25 @@ public class King extends Piece {
     private static Castle rightCastle = new Castle(Move.Direction.RIGHT);
     private static Castle leftCastle = new Castle(Move.Direction.LEFT);
 
-    public boolean check(engine.Board board)
-    {
-        return board.check(coord);
-    }
-
     public boolean move(int[] pos, int[] dest, engine.Board b)
     {
         if(Move.checkDestination(dest, b))
         {
             if(Straight.isMoveType(pos, dest))
             {
-                if(!this.hasMoved)
+                if(!this.hasMoved && !b.check(coord))
                 {
                     if(Castle.isMoveType(pos, dest))
                     {
                         {//rightCastle
                             int[] rook_coord = new int[] {dest[0]+1, dest[1]};
                             Piece piece = b.getSquare(rook_coord);//The corresponding rook
-                            if(piece.getClass()==Rook.class &&
+                            if(piece != null && piece.getClass()==Rook.class &&
                                     piece.color == color &&
                                     !piece.hasMoved() &&
-                                    this.hasMoved)
+                                    !this.hasMoved)
                             {
-                                if(super.verifyMove(pos, dest, b, rightCastle))
+                                if(verifyMove(pos, dest, b, rightCastle))
                                 {
                                     b.doMove(rook_coord[0], rook_coord[1],dest[0]-1, dest[1]);
                                     return true;
@@ -68,12 +63,12 @@ public class King extends Piece {
                         {//leftCastle
                             int[] rook_coord = new int[] {dest[0]-2, dest[1]};
                             Piece piece = b.getSquare(rook_coord);//The corresponding rook
-                            if(piece.getClass()==Rook.class &&
+                            if(piece != null && piece.getClass()==Rook.class &&
                                     piece.color == color &&
                                     !piece.hasMoved() &&
-                                    this.hasMoved)
+                                    !this.hasMoved)
                             {
-                                if(super.verifyMove(pos, dest, b, leftCastle))
+                                if(verifyMove(pos, dest, b, leftCastle))
                                 {
                                     b.doMove(rook_coord[0], rook_coord[1], dest[0]+1, dest[1]);
                                     return true;
@@ -81,7 +76,6 @@ public class King extends Piece {
                             }
                         }
                     }
-
                 }
                 return super.verifyMove(pos, dest, b, straight);
             }

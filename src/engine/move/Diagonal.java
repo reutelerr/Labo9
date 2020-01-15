@@ -32,7 +32,7 @@ public class Diagonal extends Normal
                     break;
 
                 case UP_LEFT://haut-gauche
-                    coord = new int[] {origin[0]-i, origin[0]+i};
+                    coord = new int[] {origin[0]-i, origin[1]+i};
                     break;
             }
             if(b.getSquare(coord)!= null)
@@ -63,6 +63,6 @@ public class Diagonal extends Normal
                 direction = Direction.DOWN_LEFT;//bas-gauche
         }
         int distance = Math.abs(dest[1]-origin[1]);
-        return detectCollision(origin, direction, distance);
+        return !detectCollision(origin, direction, distance);
     }
 }

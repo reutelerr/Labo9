@@ -11,6 +11,7 @@ public class Rook extends Piece
     public Rook(PlayerColor color)
     {
         super(color);
+        hasMoved = false;
     }
 
     private static Straight move = new Straight(-1, Move.Direction.ALL);
@@ -21,14 +22,19 @@ public class Rook extends Piece
         //if the move if correct
         if(Straight.isMoveType(pos, dest))
         {
-            return super.verifyMove(pos, dest, b, move);
+            return verifyMove(pos, dest, b, move);
         }
         return false;
     }
 
     public boolean hasMoved()
     {
-        return true;
+        return hasMoved;
+    }
+
+    public void moveDone(int[] pos)
+    {
+        hasMoved = true;
     }
 
     @Override

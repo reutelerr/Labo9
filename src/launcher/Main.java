@@ -18,6 +18,5 @@ public class Main {
         // 3 . Lancement du programme.
         controller.start(view);
         view.startView();
-
     }
 }

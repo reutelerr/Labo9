@@ -19,17 +19,18 @@ public class Queen extends Piece
     {
         if(Diagonal.isMoveType(pos, dest))
         {
-            return super.verifyMove(pos, dest, b, diagonal);
+            return verifyMove(pos, dest, b, diagonal);
         }
         if(Straight.isMoveType(pos, dest))
         {
-            return super.verifyMove(pos, dest, b, straight);
+            return verifyMove(pos, dest, b, straight);
         }
         return false;
     }
 
     @Override
-    public PieceType getType() {
+    public PieceType getType()
+    {
         return PieceType.QUEEN;
     }
 }

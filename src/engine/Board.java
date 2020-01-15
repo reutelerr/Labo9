@@ -1,13 +1,13 @@
 package engine;
-import chess.ChessView;
 import chess.PlayerColor;
 import engine.move.Move;
 import engine.piece.*;
 
 public class Board
 {
+    private static int GRID_SZ = 8;
+
     private Game g;
-    private ChessView view;
     private Piece[][] grid;
 
     private King whiteKing;
@@ -45,7 +45,7 @@ public class Board
         grid[6][7] = new Knight(PlayerColor.BLACK);
         grid[7][7] = new Rook(PlayerColor.BLACK);
 
-        for(int i = 0; i < 8; ++i){
+        for(int i = 0; i < GRID_SZ; ++i){
             grid[i][1] = new Pawn(PlayerColor.WHITE);
             grid[i][6] = new Pawn(PlayerColor.BLACK);
         }
@@ -54,26 +54,48 @@ public class Board
         passedPawn = null;
     }
 
-    public Board(Game g, Piece[][] grid, King whiteKing, King blackKing, Pawn passedPawn)//Constructeur de copie pour la mise en échec
+    //Constructeur de copie pour vérifier la mise en échec, copie profonde de la grille (pas besoin pour le reste)
+    public Board(Game g, Piece[][] grid, King whiteKing, King blackKing, Pawn passedPawn)
     {
         this.g = g;
         this.whiteKing = whiteKing;
         this.blackKing = blackKing;
-        this.grid = grid;
         this.passedPawn = passedPawn;
+
+        this.grid = new Piece[GRID_SZ][GRID_SZ];
+
+        for(int i=0; i<GRID_SZ; ++i)
+        {
+            for(int j=0; j<GRID_SZ; ++j)
+            {
+                this.grid[i][j] = grid[i][j];
+            }
+        }
+    }
+
+    public boolean check()
+    {
+        if(g.getActivePlayer())
+        {
+            return check(findKingCoord(whiteKing));
+        }
+        else
+        {
+            return check(findKingCoord(blackKing));
+        }
     }
 
     public boolean check(int[] coord)
     {
-        Board newBoard = new Board(g, grid, whiteKing, blackKing, passedPawn);
         for(int i=0; i<grid.length; ++i)
         {
             for(int j=0; j<grid.length; ++j)
             {
-                if(grid[i][j]!=null)
+                if(grid[i][j]!=null && grid[i][j].getColor() != g.getActivePlayer())
                 {
+                    Board newBoard = new Board(g, grid, whiteKing, blackKing, passedPawn);
                     Piece piece = grid[i][j];
-                    if(piece.move(new int[]{i,j}, coord, newBoard))
+                    if(piece.move(new int[] {i, j}, coord, newBoard))
                     {
                         return true;
                     }
@@ -83,33 +105,29 @@ public class Board
         return false;
     }
 
-    public Board move(int posX, int posY, int destX, int destY, ChessView view)//Retourne la pièce déplacée
+    public Board move(int posX, int posY, int destX, int destY)//Retourne la pièce déplacée
     {
+        if(passedPawn != null && passedPawn.getColor()==g.getActivePlayer())
+        {
+            passedPawn = null;
+        }
         Piece p = grid[posX][posY];
         if(p!=null//Vérifie que la case de départ contient une pièce
                 && p.getColor()==g.getActivePlayer()//Vérifie que la pièce en question appartienne au bon joueur
                 && Move.checkDestination(new int[] {destX, destY}, this))
         {
             Board newBoard = new Board(g, grid, whiteKing, blackKing, passedPawn);
-            p.move(new int[] {posX, posY}, new int[] {destX, destY}, newBoard);
-
-            //On vérifie que le Roi ne soit pas en échec
-            King k;
-            if(g.getActivePlayer())
-            {//Roi blanc
-                k = whiteKing;
-            }
-            else
+            if(p.move(new int[] {posX, posY}, new int[] {destX, destY}, newBoard))
             {
-                k = blackKing;
+                //On vérifie que le Roi ne soit pas en échec
+                King k;
+                if(newBoard.check())//On annule le coup
+                {
+                    return this;
+                }
+                p.moveDone(new int[] {destX, destY});
+                return newBoard;
             }
-            if(k.check(newBoard))//On annule le coup
-            {
-                return this;
-            }
-
-            p.moveDone();
-            return newBoard;
         }
         return this;
     }
@@ -117,7 +135,6 @@ public class Board
     public void removePiece(int posX, int posY)//Pour la prise en passant
     {
         grid[posX][posY] = null;
-        view.removePiece(posX, posY);
     }
 
     public void doMove(int posX, int posY, int destX, int destY)
@@ -125,8 +142,21 @@ public class Board
         Piece p = grid[posX][posY];
         grid[destX][destY]=p;
         grid[posX][posY]=null;
-        view.putPiece(p.getType(), p.getColorEnum(), destX, destY);
-        view.removePiece(posX, posY);
+    }
+
+    private int[] findKingCoord(King k)
+    {
+        for(int i=0; i<grid.length; ++i)
+        {
+            for(int j=0; j<grid.length; ++j)
+            {
+                if(grid[i][j]!=null && grid[i][j] == k)
+                {
+                    return new int[] {i, j};
+                }
+            }
+        }
+        return null;
     }
 
     public void setPassedPawn(Pawn p)

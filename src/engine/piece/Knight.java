@@ -17,7 +17,7 @@ public class Knight extends Piece
     {
         if(L.isMoveType(pos, dest) && move.verifyMove(pos, dest, b))
         {
-            return super.verifyMove(pos, dest, b, move);
+            return verifyMove(pos, dest, b, move);
         }
         return false;
         //First, we check if the destination is correct, then if the attempted move is Diagonal, finally if the move if correct

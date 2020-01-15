@@ -63,6 +63,6 @@ public class Castle extends Straight
         {
             return false;
         }
-        return detectCollision(origin, direction, distance) && !b.check(dest);
+        return !detectCollision(origin, direction, distance) && !b.check(dest);
     }
 }

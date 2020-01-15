@@ -17,7 +17,7 @@ public class Bishop extends Piece
     {
         if(Diagonal.isMoveType(pos, dest))
         {
-            return super.verifyMove(pos, dest, b, move);
+            return verifyMove(pos, dest, b, move);
         }
         return false;
     }

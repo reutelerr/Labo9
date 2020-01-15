@@ -34,7 +34,7 @@ public class Game implements chess.ChessController
 
     private boolean activePlayer;
 
-    void init(){
+    private void init(){
         Move.init(this);
     }
 
@@ -65,16 +65,36 @@ public class Game implements chess.ChessController
 
     public boolean move(int posX, int posY, int destX, int destY)
     {
-        activePlayer = !activePlayer;
-        Board newB = b.move(posX, posY, destX, destY, view);
+        Board newB = b.move(posX, posY, destX, destY);
         if(newB == b)
         {
+            display();
             return false;
         }
         else
         {
             b = newB;
+            activePlayer = !activePlayer;
+            display();
             return true;
+        }
+    }
+
+    public void display()
+    {
+        for(int i = 0; i < 8; ++i)
+        {
+            for(int j = 0; j < 8; ++j){
+                Piece p = b.getSquare(new int[] {i,j});
+                if(p!=null)
+                {
+                    view.putPiece(p.getType(), p.getColorEnum(), i, j);
+                }
+                else
+                {
+                    view.removePiece(i, j);
+                }
+            }
         }
     }
 

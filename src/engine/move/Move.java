@@ -28,7 +28,7 @@ public abstract class Move
 
     static public boolean checkDestinationTaken(int[] dest, engine.Board b)
     {
-        return b.getSquare(dest).getColor() == !g.getActivePlayer();
+        return b.getSquare(dest)!=null && b.getSquare(dest).getColor() == !g.getActivePlayer();
     }
 
     static public boolean checkDestination(int[] dest, engine.Board b)//true si destination ok

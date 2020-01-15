@@ -57,5 +57,5 @@ public abstract class Piece
         }
     }
 
-    public void moveDone(){}//It's redefined by Kings, Rooks and Pawns
+    public void moveDone(int[] pos){}//It's redefined by Kings, Rooks and Pawns
 }

@@ -33,7 +33,7 @@ public class Straight extends Normal
                     break;
 
                 case DOWN://bas
-                    coord = new int[] {origin[0], origin[0]-i};
+                    coord = new int[] {origin[0], origin[1]-i};
                     break;
 
                 case LEFT://gauche
